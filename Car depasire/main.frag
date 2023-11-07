@@ -17,7 +17,8 @@ in vec2 tex_Coord;		//	Coordonata de texturare;
 out vec4 out_Color;		//	Culoarea actualizata;
 //	Variabilele uniforme;
 uniform int codTexture;
-uniform sampler2D myTexture;
+uniform sampler2D carTexture;
+uniform sampler2D policeTexture;
 
 //	Variabile pentru culori;
 vec4 red = vec4(1.0,0.0,0.0,1.0);
@@ -27,10 +28,10 @@ void main(void)
   {
     if(codTexture == 0)
     {
-         out_Color=mix(red,green,0.3);
+         out_Color = texture(policeTexture, tex_Coord);
     }
     else
     {
-        out_Color = mix(texture(myTexture, tex_Coord), ex_Color, 0.8);	//	Amestecarea texturii si a culorii;
+        out_Color = texture(carTexture, tex_Coord);	//	Amestecarea texturii si a culorii;
     }
   }
