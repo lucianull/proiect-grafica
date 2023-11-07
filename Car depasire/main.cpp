@@ -127,11 +127,11 @@ void CreateVBO()
 
 	glGenBuffers(1, &VboId);													//  Generarea bufferului si indexarea acestuia catre variabila VboId;
 	glBindBuffer(GL_ARRAY_BUFFER, VboId);										//  Setarea tipului de buffer - atributele varfurilor;
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Cars[0].Vertices), Cars[0].Vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, Cars[0].Vertices, GL_STATIC_DRAW);
 
 	glGenBuffers(1, &EboId);														//  Generarea bufferului si indexarea acestuia catre variabila EboId;
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EboId);									//  Setarea tipului de buffer - atributele varfurilor;
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Cars[0].Indices), Cars[0].Indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * 6, Cars[0].Indices, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (GLvoid*)0);
@@ -196,7 +196,7 @@ void RenderFunction(void)
 	codTexture = 1;
 	glUniform1i(codTextureLocation, codTexture);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(0));
-	glFlush();								//  Asigura rularea tuturor comenzilor OpenGL apelate anterior;
+	glFlush();								//  here i get exception thrown
 }
 
 int main(int argc, char* argv[])
