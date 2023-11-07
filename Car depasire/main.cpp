@@ -30,7 +30,7 @@ GLuint
 GLfloat
 	winWidth = 1200, winHeight = 900;
 glm::mat4
-	myMatrix, matrRot;
+	myMatrix, resizeMatrix;
 int codTexture;
 float xMin = -400.f, xMax = 400, yMin = -300, yMax = 300;
 
@@ -180,6 +180,7 @@ void Initialize(void)
 	CreateShaders();							//  Initilizarea shaderelor;
 	//	Instantierea variabilelor uniforme pentru a "comunica" cu shaderele;
 	myMatrixLocation = glGetUniformLocation(ProgramId, "myMatrix");
+	resizeMatrix = glm::ortho(xMin, xMax, yMin, yMax);
 	glUniform1i(glGetUniformLocation(ProgramId, "myTexture"), 0);
 	codTextureLocation = glGetUniformLocation(ProgramId, "codTexture");
 	LoadTexture("car.png");
@@ -190,7 +191,7 @@ void Initialize(void)
 void RenderFunction(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-
+	myMatrix = resizeMatrix;
 	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
 	glUniform1i(glGetUniformLocation(ProgramId, "myTexture"), 0);
 	codTexture = 1;
