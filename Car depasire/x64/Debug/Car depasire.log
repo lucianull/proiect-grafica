@@ -1,1 +1,17 @@
-﻿D:\Visual Studio\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(456,5): error MSB8020: The build tools for Visual Studio 2019 (Platform Toolset = 'v142') cannot be found. To build using the v142 build tools, please install Visual Studio 2019 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".
+﻿  C:freeglut.dll
+  C:glew32.dll
+  C:glew32s.dll
+  3 File(s) copied
+  C:glfw3.dll
+  C:glfw3dll.dll
+  C:glfw3_mt.dll
+  3 File(s) copied
+  C:SOIL.dll
+  1 File(s) copied
+  main.cpp
+C:\Informatica\An 3\Sem 1\Grafica pe Calculator\proiect-grafica\Car depasire\main.cpp(208,31): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+C:\Informatica\An 3\Sem 1\Grafica pe Calculator\proiect-grafica\Car depasire\main.cpp(208,21): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+  Car depasire.vcxproj -> C:\Informatica\An 3\Sem 1\Grafica pe Calculator\proiect-grafica\x64\Debug\Car depasire.exe
+  0 File(s) copied
+  0 File(s) copied
+  0 File(s) copied

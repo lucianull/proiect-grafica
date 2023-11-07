@@ -105,6 +105,9 @@
     <ClCompile Include="include\glm\detail\glm.cpp">
       <Filter>Header Files\template-built-ins\glm\detail</Filter>
     </ClCompile>
+    <ClCompile Include="main.vert">
+      <Filter>Resource Files\shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\SOIL.h">
@@ -1479,5 +1482,13 @@
     <None Include="lib\x64\GL\DLLs\glew32.dll">
       <Filter>Resource Files\template-built-ins\DLLs\64b</Filter>
     </None>
+    <None Include="main.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\..\..\Users\lucia\Downloads\car.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
