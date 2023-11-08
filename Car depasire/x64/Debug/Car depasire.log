@@ -8,9 +8,6 @@
   3 File(s) copied
   C:SOIL.dll
   1 File(s) copied
-  main.cpp
-C:\Informatica\An 3\Sem 1\Grafica pe Calculator\proiect-grafica\Car depasire\main.cpp(262,31): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-C:\Informatica\An 3\Sem 1\Grafica pe Calculator\proiect-grafica\Car depasire\main.cpp(262,21): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
   Car depasire.vcxproj -> C:\Informatica\An 3\Sem 1\Grafica pe Calculator\proiect-grafica\x64\Debug\Car depasire.exe
   0 File(s) copied
   0 File(s) copied
