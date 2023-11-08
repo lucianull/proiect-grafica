@@ -1490,5 +1490,11 @@
     <Image Include="..\..\..\..\..\..\Users\lucia\Downloads\car.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="polis.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="plains.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

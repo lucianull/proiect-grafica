@@ -1,14 +1,17 @@
-﻿  C:freeglut.dll
-  C:glew32.dll
-  C:glew32s.dll
+﻿  D:freeglut.dll
+  D:glew32.dll
+  D:glew32s.dll
   3 File(s) copied
-  C:glfw3.dll
-  C:glfw3dll.dll
-  C:glfw3_mt.dll
+  D:glfw3.dll
+  D:glfw3dll.dll
+  D:glfw3_mt.dll
   3 File(s) copied
-  C:SOIL.dll
+  D:SOIL.dll
   1 File(s) copied
-  Car depasire.vcxproj -> C:\Informatica\An 3\Sem 1\Grafica pe Calculator\proiect-grafica\x64\Debug\Car depasire.exe
+  main.cpp
+D:\opengl\Car depasire\Car depasire\main.cpp(213,31): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+D:\opengl\Car depasire\Car depasire\main.cpp(213,21): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+  Car depasire.vcxproj -> D:\opengl\Car depasire\x64\Debug\Car depasire.exe
   0 File(s) copied
   0 File(s) copied
   0 File(s) copied

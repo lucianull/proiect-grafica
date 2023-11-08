@@ -647,6 +647,8 @@ xcopy /y /d "$(ProjectDir)lib\x64\SOIL\*.dll" "$(OutDir)" &amp;</Command>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\..\Users\lucia\Downloads\car.png" />
+    <Image Include="plains.png" />
+    <Image Include="polis.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
