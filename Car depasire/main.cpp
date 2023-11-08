@@ -11,7 +11,8 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-#include "SOIL.h"	
+#include "SOIL.h"
+#include <iostream>
 //////////////////////////////////////
 
 GLuint
@@ -31,15 +32,51 @@ texturePlains;
 GLfloat
 	winWidth = 1200, winHeight = 900;
 glm::mat4
-	myMatrix, matrRot, resizeMatrix, matrTranslate;
+	myMatrix, matrRot, resizeMatrix, matrTranslate, matrTranslCar, matrRotCar, matrTranslToCenter, matrTranslFromCenter;
 int codTexture;
 GLfloat xMin = -400.f, xMax = 400.f, yMin = -300.f, yMax = 300.f;
 GLfloat i;
+
+float angle = 0;					//	Unghiul de rotire al patratului;
+float translationX = 0; float translationY = 0;
 
 void MoveRight(void)
 {
 	i = i + 0.01f;
 	glutPostRedisplay();	//	Forteza redesenarea scenei;
+}
+
+void ProcessNormalKeys(unsigned char key, int x, int y)
+{
+	switch (key) {		//	Procesarea tastelor 'l' si 'r' modifica unghiul de rotire al patratului;
+	case 'q':
+		angle += 0.2f;	//	Rotire spre stanga;
+		break;
+	case 'e':
+		angle -= 0.2f;	//	Rotire spre dreapta;
+		break;
+	}
+	if (key == 27)
+		exit(0);
+}
+
+void ProcessSpecialKeys(int key, int xx, int yy)
+{
+	switch (key)			//	Procesarea tastelor 'LEFT', 'RIGHT', 'UP', 'DOWN'
+	{						//	duce la deplasarea patratului pe axele Ox si Oy;
+	case GLUT_KEY_LEFT:
+		translationX -= 10;
+		break;
+	case GLUT_KEY_RIGHT:
+		translationX += 10;
+		break;
+	case GLUT_KEY_UP:
+		translationY += 10;
+		break;
+	case GLUT_KEY_DOWN:
+		translationY -= 10;
+		break;
+	}
 }
 
 void LoadTexture(const char* photoPath, GLuint& texture)
@@ -177,6 +214,8 @@ void Initialize(void)
 	LoadTexture("plains.png", texturePlains);
 	resizeMatrix = glm::ortho(xMin, xMax, yMin, yMax);
 	glutIdleFunc(MoveRight);
+	matrTranslToCenter = glm::translate(glm::mat4(1.0f), glm::vec3(360.f, 60.f, 0.0f));
+	matrTranslFromCenter = glm::translate(glm::mat4(1.0f), glm::vec3(-360.f, -60.f, 0.0f));
 }
 
 void RenderFunction(void)
@@ -196,8 +235,11 @@ void RenderFunction(void)
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(12 * sizeof(GLuint)));
 
 	// Draw the first rectangle (car)
-	//myMatrix = resizeMatrix;
-	//glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
+	matrTranslCar = glm::translate(glm::mat4(1.0f), glm::vec3(translationX, translationY, 0.0));
+	matrRotCar = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0, 0.0, 1.0));
+
+	myMatrix = resizeMatrix * matrTranslCar * matrTranslFromCenter * matrRotCar * matrTranslToCenter;
+	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
 	glBindTexture(GL_TEXTURE_2D, textureCar);
 	glUniform1i(glGetUniformLocation(ProgramId, "carTexture"), 0);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(0));
@@ -232,7 +274,8 @@ int main(int argc, char* argv[])
 	Initialize();						//  Setarea parametrilor necesari pentru fereastra de vizualizare; 
 	glutDisplayFunc(RenderFunction);	//  Desenarea scenei in fereastra;
 	glutCloseFunc(Cleanup);				//  Eliberarea resurselor alocate de program;
-
+	glutKeyboardFunc(ProcessNormalKeys);	//	Functii ce proceseaza inputul de la tastatura utilizatorului;
+	glutSpecialFunc(ProcessSpecialKeys);
 	//  Bucla principala de procesare a evenimentelor GLUT (functiile care incep cu glut: glutInit etc.) este pornita;
 	//  Prelucreaza evenimentele si deseneaza fereastra OpenGL pana cand utilizatorul o inchide;
 
