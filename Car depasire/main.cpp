@@ -31,9 +31,16 @@ texturePlains;
 GLfloat
 	winWidth = 1200, winHeight = 900;
 glm::mat4
-	myMatrix, matrRot, resizeMatrix;
+	myMatrix, matrRot, resizeMatrix, matrTranslate;
 int codTexture;
 GLfloat xMin = -400.f, xMax = 400.f, yMin = -300.f, yMax = 300.f;
+GLfloat i;
+
+void MoveRight(void)
+{
+	i = i + 0.01f;
+	glutPostRedisplay();	//	Forteza redesenarea scenei;
+}
 
 void LoadTexture(const char* photoPath, GLuint& texture)
 {
@@ -100,7 +107,7 @@ void CreateVBO()
 		//road
 		8, 9, 10,
 		8, 10, 11,
-
+		//background
 		12, 13, 14,
 		12, 14, 15
 	};
@@ -167,41 +174,44 @@ void Initialize(void)
 	LoadTexture("car.png", textureCar);
 	LoadTexture("polis.png", texturePolis);
 	LoadTexture("road.png", textureRoad);
-	//LoadTexture("plains.png", texturePlains);
+	LoadTexture("plains.png", texturePlains);
 	resizeMatrix = glm::ortho(xMin, xMax, yMin, yMax);
+	glutIdleFunc(MoveRight);
 }
 
 void RenderFunction(void)
 {
+	matrTranslate = glm::translate(glm::mat4(1.0f), glm::vec3(i, 0.0, 0.0));
 	glClear(GL_COLOR_BUFFER_BIT);
+	myMatrix = resizeMatrix; // Update the matrix for the second rectangle
+	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
+	glBindTexture(GL_TEXTURE_2D, texturePlains);
+	glUniform1i(glGetUniformLocation(ProgramId, "carTexture"), 0);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(18* sizeof(GLuint)));
 
 	//myMatrix = resizeMatrix; // Update the matrix for the second rectangle
 	//glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
-	//glBindTexture(GL_TEXTURE_2D, texturePlains);
-	//glUniform1i(glGetUniformLocation(ProgramId, "carTexture"), 0);
-	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(18* sizeof(GLuint)));
-
-	myMatrix = resizeMatrix; // Update the matrix for the second rectangle
-	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
 	glBindTexture(GL_TEXTURE_2D, textureRoad);
 	glUniform1i(glGetUniformLocation(ProgramId, "carTexture"), 0);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(12 * sizeof(GLuint)));
 
 	// Draw the first rectangle (car)
-	myMatrix = resizeMatrix;
-	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
+	//myMatrix = resizeMatrix;
+	//glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
 	glBindTexture(GL_TEXTURE_2D, textureCar);
 	glUniform1i(glGetUniformLocation(ProgramId, "carTexture"), 0);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(0));
 
 	// Load the texture for the second rectangle (polis)
 	 //Draw the second rectangle (polis)
-	myMatrix = resizeMatrix; // Update the matrix for the second rectangle
+	//myMatrix = resizeMatrix; // Update the matrix for the second rectangle
+	//glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
+	myMatrix = resizeMatrix * matrTranslate;
 	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
 	glBindTexture(GL_TEXTURE_2D, texturePolis);
 	glUniform1i(glGetUniformLocation(ProgramId, "carTexture"), 0);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(6 * sizeof(GLuint)));
-
+	glutPostRedisplay();
 	glFlush();
 }
 int main(int argc, char* argv[])
