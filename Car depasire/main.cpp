@@ -27,7 +27,8 @@ matrRotlLocation,
 textureCar,
 texturePolis,
 textureRoad,
-texturePlains;
+texturePlains,
+textureBorder;
 
 GLfloat
 	winWidth = 1200, winHeight = 900;
@@ -79,12 +80,15 @@ void ProcessSpecialKeys(int key, int xx, int yy)
 	}
 }
 
-void LoadTexture(const char* photoPath, GLuint& texture)
+void LoadTexture(const char* photoPath, GLuint& texture, bool repeat)
 {
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	//	Desfasurarea imaginii pe orizonatala/verticala in functie de parametrii de texturare;
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	if(repeat)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	else
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -113,15 +117,15 @@ void CreateVBO()
 {
 	GLfloat Car[] = {
 		//first rectangle
-		-400.f, -40.f, 0.0f, 1.0f,	0.0f, 0.0f, 0.0f,	0.0f, 1.0f,
-		-400.f, -80.f, 0.0f, 1.0f,	0.0f, 0.0f, 0.0f,	0.0f, 0.0f,
-		-320.f, -80.f, 0.0f, 1.0f,	0.0f, 0.0f, 0.0f,	1.0f, 0.0f,
-		-320.f, -40.f, 0.0f, 1.0f,	0.0f, 0.0f, 0.0f,	1.0f, 1.0f,
+		-400.f, -30.f, 0.0f, 1.0f,	1.0f, 1.0f, 1.0f,	0.0f, 1.0f,
+		-400.f, -80.f, 0.0f, 1.0f,	1.0f, 1.0f, 1.0f,	0.0f, 0.0f,
+		-320.f, -80.f, 0.0f, 1.0f,	1.0f, 1.0f, 1.0f,	1.0f, 0.0f,
+		-320.f, -30.f, 0.0f, 1.0f,	1.0f, 1.0f, 1.0f,	1.0f, 1.0f,
 		//second rectangle
-		-300.f, -40.f, 0.0f, 1.0f,	0.0f, 0.0f, 0.0f,	0.0f, 1.0f,
+		-300.f, -30.f, 0.0f, 1.0f,	0.0f, 0.0f, 0.0f,	0.0f, 1.0f,
 		-300.f, -80.f, 0.0f, 1.0f,	0.0f, 0.0f, 0.0f,	0.0f, 0.0f,
 		-220.f, -80.f, 0.0f, 1.0f,	0.0f, 0.0f, 0.0f,	1.0f, 0.0f,
-		-220.f, -40.f, 0.0f, 1.0f,	0.0f, 0.0f, 0.0f,	1.0f, 1.0f,
+		-220.f, -30.f, 0.0f, 1.0f,	0.0f, 0.0f, 0.0f,	1.0f, 1.0f,
 		//road
 	    -400.f,  100.f, 0.0f, 1.0f,	0.0f, 0.0f, 0.0f,	0.0f, 1.0f,
 	    -400.f, -100.f, 0.0f, 1.0f,	0.0f, 0.0f, 0.0f,	0.0f, 0.0f,
@@ -132,6 +136,16 @@ void CreateVBO()
 		 xMin,  yMin, 0.0f, 1.0f,	0.0f, 0.0f, 0.0f,	0.0f, 0.0f,
 		 xMax,  yMin, 0.0f, 1.0f,	0.0f, 0.0f, 0.0f,	1.0f, 0.0f,
 		 xMax,  yMax, 0.0f, 1.0f,	0.0f, 0.0f, 0.0f,	1.0f, 1.0f,
+
+		-400.f, -90.f, 0.0f, 1.0f,	1.0f, 1.0f, 1.0f,	0.0f, 1.0f,
+		-400.f, -100.f, 0.0f, 1.0f,	1.0f, 1.0f, 1.0f,	0.0f, 0.0f,
+		 400.f, -100.f, 0.0f, 1.0f,	1.0f, 1.0f, 1.0f,	1.0f, 0.0f,
+		 400.f, -90.f, 0.0f, 1.0f,	1.0f, 1.0f, 1.0f,	1.0f, 1.0f,
+
+		-400.f, 100.f, 0.0f, 1.0f,	1.0f, 1.0f, 1.0f,	0.0f, 1.0f,
+		-400.f, 90.f, 0.0f, 1.0f,	1.0f, 1.0f, 1.0f,	0.0f, 0.0f,
+		 400.f, 90.f, 0.0f, 1.0f,	1.0f, 1.0f, 1.0f,	1.0f, 0.0f,
+		 400.f, 100.f, 0.0f, 1.0f,	1.0f, 1.0f, 1.0f,	1.0f, 1.0f
 	};
 
 	static const GLuint Indices[] = {
@@ -146,7 +160,14 @@ void CreateVBO()
 		8, 10, 11,
 		//background
 		12, 13, 14,
-		12, 14, 15
+		12, 14, 15,
+
+		//border1 
+		16, 17, 18,
+		16, 18, 19,
+
+		20, 21, 22,
+		20, 22, 23
 	};
 	glGenVertexArrays(1, &VaoId);                                                   //  Generarea VAO si indexarea acestuia catre variabila VaoId;
 	glBindVertexArray(VaoId);
@@ -208,10 +229,11 @@ void Initialize(void)
 	//	Instantierea variabilelor uniforme pentru a "comunica" cu shaderele;
 	myMatrixLocation = glGetUniformLocation(ProgramId, "myMatrix");
 	glUniform1i(glGetUniformLocation(ProgramId, "carTexture"), 0);
-	LoadTexture("car.png", textureCar);
-	LoadTexture("polis.png", texturePolis);
-	LoadTexture("road.png", textureRoad);
-	LoadTexture("plains.png", texturePlains);
+	LoadTexture("car.png", textureCar, false);
+	//LoadTexture("polis.png", texturePolis, false);
+	LoadTexture("road.png", textureRoad, false);
+	LoadTexture("plains.png", texturePlains, false);
+	LoadTexture("bordura.png", textureBorder, true);
 	resizeMatrix = glm::ortho(xMin, xMax, yMin, yMax);
 	glutIdleFunc(MoveRight);
 	matrTranslToCenter = glm::translate(glm::mat4(1.0f), glm::vec3(360.f, 60.f, 0.0f));
@@ -234,6 +256,14 @@ void RenderFunction(void)
 	glUniform1i(glGetUniformLocation(ProgramId, "carTexture"), 0);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(12 * sizeof(GLuint)));
 
+	glBindTexture(GL_TEXTURE_2D, textureBorder);
+	glUniform1i(glGetUniformLocation(ProgramId, "carTexture"), 0);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(24 * sizeof(GLuint)));
+
+	glBindTexture(GL_TEXTURE_2D, textureBorder);
+	glUniform1i(glGetUniformLocation(ProgramId, "carTexture"), 0);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(30 * sizeof(GLuint)));
+
 	// Draw the first rectangle (car)
 	matrTranslCar = glm::translate(glm::mat4(1.0f), glm::vec3(translationX, translationY, 0.0));
 	matrRotCar = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0, 0.0, 1.0));
@@ -245,12 +275,9 @@ void RenderFunction(void)
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(0));
 
 	// Load the texture for the second rectangle (polis)
-	 //Draw the second rectangle (polis)
-	//myMatrix = resizeMatrix; // Update the matrix for the second rectangle
-	//glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
 	myMatrix = resizeMatrix * matrTranslate;
 	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
-	glBindTexture(GL_TEXTURE_2D, texturePolis);
+	glBindTexture(GL_TEXTURE_2D, textureCar);
 	glUniform1i(glGetUniformLocation(ProgramId, "carTexture"), 0);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(6 * sizeof(GLuint)));
 	glutPostRedisplay();
