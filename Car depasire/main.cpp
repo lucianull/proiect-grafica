@@ -166,8 +166,7 @@ void CreateVBO()
 		16, 17, 18,
 		16, 18, 19,
 
-		20, 21, 22,
-		20, 22, 23
+		20, 21, 22, 23
 	};
 	glGenVertexArrays(1, &VaoId);                                                   //  Generarea VAO si indexarea acestuia catre variabila VaoId;
 	glBindVertexArray(VaoId);
@@ -233,7 +232,7 @@ void Initialize(void)
 	//LoadTexture("polis.png", texturePolis, false);
 	LoadTexture("road.png", textureRoad, false);
 	LoadTexture("plains.png", texturePlains, false);
-	LoadTexture("bordura.png", textureBorder, true);
+	LoadTexture("bordura.png", textureBorder, false);
 	resizeMatrix = glm::ortho(xMin, xMax, yMin, yMax);
 	glutIdleFunc(MoveRight);
 	matrTranslToCenter = glm::translate(glm::mat4(1.0f), glm::vec3(360.f, 60.f, 0.0f));
@@ -262,7 +261,7 @@ void RenderFunction(void)
 
 	glBindTexture(GL_TEXTURE_2D, textureBorder);
 	glUniform1i(glGetUniformLocation(ProgramId, "carTexture"), 0);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(30 * sizeof(GLuint)));
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (void*)(30 * sizeof(GLuint)));
 
 	// Draw the first rectangle (car)
 	matrTranslCar = glm::translate(glm::mat4(1.0f), glm::vec3(translationX, translationY, 0.0));
